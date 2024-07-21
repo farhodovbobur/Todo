@@ -51,11 +51,12 @@ class ComposerStaticInit045658d81f6d9d3243e731dda7bf04d1
     );
 
     public static $classMap = array (
+        'Bot' => __DIR__ . '/../..' . '/src/Bot.php',
         'ComposerAutoloaderInit045658d81f6d9d3243e731dda7bf04d1' => __DIR__ . '/..' . '/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
         'Composer\\Autoload\\ComposerStaticInit045658d81f6d9d3243e731dda7bf04d1' => __DIR__ . '/..' . '/composer/autoload_static.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'DB' => __DIR__ . '/../..' . '/DB.php',
+        'DB' => __DIR__ . '/../..' . '/src/DB.php',
         'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
         'GuzzleHttp\\BodySummarizerInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
@@ -159,7 +160,8 @@ class ComposerStaticInit045658d81f6d9d3243e731dda7bf04d1
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
-        'Todo' => __DIR__ . '/../..' . '/Todo.php',
+        'Todo' => __DIR__ . '/../..' . '/src/Todo.php',
+        'Users' => __DIR__ . '/../..' . '/src/Users.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
