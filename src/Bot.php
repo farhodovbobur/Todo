@@ -62,6 +62,14 @@ class Bot
         $this->sendMessage($chatId, $message);
     }
 
+    public function hendleHelpCommand(int $chatId): void
+    {
+        $message = "
+        /start - Start bot\n/add - Create a new task\n/show - Show all tasks\n/delete - Delete task\n/help - Show help message";
+
+        $this->sendMessage($chatId, $message);
+    }
+
     public function addTask(int $chatId, string $text): void
     {
         $this->task->add($chatId, $text);
@@ -101,6 +109,9 @@ class Bot
                 $text = "$status {$task['text']} $dot";
                 $keyboard['inline_keyboard'][] = [['text' => "$text", 'callback_data' => $task['id']]];
             }
+            if (count($tasksList) > 10){
+                $keyboard['inline_keyboard'][] = [['text' => '◀️', 'callback_data' => 'prev'],['text' => '▶️', 'callback_data' => 'next']];
+            }
             $keyboard['inline_keyboard'][] = [['text' => 'Add task', 'callback_data' => '/add']];
 
             $keyboards = json_encode($keyboard);
@@ -113,7 +124,14 @@ class Bot
             $this->sendMessage($chatId, $message, $keyboards);
         } else {
             $message = "Sorry, no tasks were found.";
-            $this->sendMessage($chatId, $message);
+            $keyboard = json_encode([
+                'inline_keyboard'=>[
+                    [
+                        ['text' => 'Add task', 'callback_data' => '/add']
+                    ]
+                ]
+            ]);
+            $this->sendMessage($chatId, $message, $keyboard);
         }
     }
 

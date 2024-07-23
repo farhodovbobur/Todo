@@ -33,6 +33,9 @@ if (isset($update->message)) {
             $user->setAction($chat_id, $text);
             $bot->showAllTasks($chat_id);
             return;
+        case '/help':
+            $bot->hendleHelpCommand($chat_id);
+            return;
         case '/delete':
             $taskId = $user->getUser($chat_id);
             $task->delete($taskId[0]['task_id']);
@@ -73,17 +76,17 @@ if (isset($update->callback_query)) {
         case 'done':
             $taskId = $user->getUser($chat_id);
             $task->checking($taskId[0]['task_id']);
-            $bot->showAllTasks($chat_id, $message_id);
+            $bot->showAllTasks($chat_id, $message_id, "The Task successfully checked\n\n");
             return;
         case 'not_done':
             $taskId = $user->getUser($chat_id);
             $task->unchecking($taskId[0]['task_id']);
-            $bot->showAllTasks($chat_id, $message_id);
+            $bot->showAllTasks($chat_id, $message_id, "The Task successfully unchecked\n\n");
             return;
         case 'delete':
             $taskId = $user->getUser($chat_id);
             $task->delete($taskId[0]['task_id']);
-            $bot->showAllTasks($chat_id, $message_id);
+            $bot->showAllTasks($chat_id, $message_id, "The Task successfully deleted\n\n");
             return;
         case 'edit':
             $user->setAction($chat_id, $callback_data);
