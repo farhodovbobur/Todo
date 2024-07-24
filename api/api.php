@@ -12,7 +12,7 @@ switch ($path) {
     case '/add':
         $task->add($update->userId, $update->text);
         return;
-    case '/show':
+    case '/view':
         echo json_encode($task->getAll());
         return;
     case '/delete':
