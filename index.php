@@ -7,7 +7,11 @@ date_default_timezone_set("Asia/Tashkent");
 $update = json_decode(file_get_contents('php://input'));
 
 if (isset($update)) {
-    require 'bot/bot.php';
+    if (isset($update->update_id)) {
+        require 'bot/bot.php';
+        return;
+    }
+    require 'api/api.php';
     return;
 }
 
@@ -15,7 +19,7 @@ if (count($_POST) > 0 || count($_GET) > 0) {
     $todo = new Todo();
 
     if (isset($_POST["text"])) {
-        $todo->add($_POST["text"]);
+        $todo->add(1, $_POST["text"]);
     }
 
     if (isset($_GET["checked"])) {
