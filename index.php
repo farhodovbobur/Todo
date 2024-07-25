@@ -6,33 +6,17 @@ date_default_timezone_set("Asia/Tashkent");
 
 $update = json_decode(file_get_contents('php://input'));
 
-if (isset($update)) {
-    if (isset($update->update_id)) {
-        require 'bot/bot.php';
-        return;
-    }
+$router = new Router();
+
+if ($router->isApiCall()) {
+    echo $router->isApiCall();
     require 'api/api.php';
     return;
 }
 
-if (count($_POST) > 0 || count($_GET) > 0) {
-    $todo = new Todo();
-
-    if (isset($_POST["text"])) {
-        $todo->add(1, $_POST["text"]);
-    }
-
-    if (isset($_GET["checked"])) {
-        $todo->checking($_GET["checked"]);
-    }
-
-    if (isset($_GET["unchecked"])) {
-        $todo->unchecking($_GET["unchecked"]);
-    }
-
-    if (isset($_GET["delete"])) {
-        $todo->delete($_GET["delete"]);
-    }
+if ($router->isTelegramUpdate()) {
+    require 'bot/bot.php';
+    return;
 }
 
-require 'view/view.php';
+require 'web/web.php';

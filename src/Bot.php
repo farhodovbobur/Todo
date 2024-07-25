@@ -109,9 +109,11 @@ class Bot
                 $text = "$status {$task['text']} $dot";
                 $keyboard['inline_keyboard'][] = [['text' => "$text", 'callback_data' => $task['id']]];
             }
-            if (count($tasksList) > 10){
-                $keyboard['inline_keyboard'][] = [['text' => '◀️', 'callback_data' => 'prev'],['text' => '▶️', 'callback_data' => 'next']];
-            }
+
+//            if (count($tasksList) > 10){
+//                $keyboard['inline_keyboard'][] = [['text' => '◀️', 'callback_data' => 'prev'],['text' => '▶️', 'callback_data' => 'next']];
+//            }
+
             $keyboard['inline_keyboard'][] = [['text' => 'Add task', 'callback_data' => '/add']];
 
             $keyboards = json_encode($keyboard);

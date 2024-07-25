@@ -4,24 +4,30 @@ declare(strict_types=1);
 
 $update = json_decode(file_get_contents('php://input'));
 
+$router = new Router();
 $task = new Todo();
 
-$path = parse_url($_SERVER['REQUEST_URI'])['path'];
-
-switch ($path) {
-    case '/add':
-        $task->add($update->userId, $update->text);
+switch ($_SERVER['REQUEST_METHOD']) {
+    case 'GET':
+        if ($router->getResourceId()) {
+            if (is_numeric($router->getResourceId())) {
+                $view = $task->getId((int)$router->getResourceId());
+                print_r($view);
+                return;
+            }
+            echo "Please, enter numeric resource id";
+            return;
+        }
+        $view = $task->getAll();
+        print_r($view);
         return;
-    case '/show':
-        echo json_encode($task->getAll());
+    case 'POST':
+        echo "Add new resource";
         return;
-    case '/delete':
-        $task->delete($update->taskId);
+    case 'PATCH':
+        echo "Resource " . $router->getResourceId() . " update";
         return;
-    case '/check':
-        $task->checking($update->taskId);
-        return;
-    case '/uncheck':
-        $task->unchecking($update->taskId);
+    case 'DELETE':
+        echo "Resource " . $router->getResourceId() . " delete";
         return;
 }

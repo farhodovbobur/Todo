@@ -160,6 +160,7 @@ class ComposerStaticInit045658d81f6d9d3243e731dda7bf04d1
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
+        'Router' => __DIR__ . '/../..' . '/src/Router.php',
         'Todo' => __DIR__ . '/../..' . '/src/Todo.php',
         'Users' => __DIR__ . '/../..' . '/src/Users.php',
     );

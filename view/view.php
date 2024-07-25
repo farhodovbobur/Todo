@@ -12,6 +12,13 @@
     <div class="row justify-content-center">
         <div class="col-8">
             <h1 class="my-5">The Best TODO App</h1>
+
+            <?php
+            require 'add_todo.php';
+            ?>
+
+            <hr class='border border-2 opacity-50'>
+
             <table class="table">
                 <thead>
                 <tr>
@@ -28,12 +35,6 @@
 
                 </tbody>
             </table>
-
-            <hr class='border border-2 opacity-50'>
-
-            <?php
-            require 'add_todo.php';
-            ?>
         </div>
     </div>
 </div>
