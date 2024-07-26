@@ -13,7 +13,7 @@ class Router
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $path = explode('/', $uri);
-        return array_search('ap', $path);
+        return array_search('api', $path);
     }
 
     public function getResourceId(): float|false|int|string
@@ -29,5 +29,16 @@ class Router
             return true;
         }
         return false;
+    }
+
+    public function sendResponse($message): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($message);
+    }
+
+    public function getUpdate()
+    {
+        return $this->updates->userId;
     }
 }

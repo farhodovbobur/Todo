@@ -12,22 +12,51 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if ($router->getResourceId()) {
             if (is_numeric($router->getResourceId())) {
                 $view = $task->getId((int)$router->getResourceId());
-                print_r($view);
+                $router->sendResponse($view);
                 return;
             }
-            echo "Please, enter numeric resource id";
+            $router->sendResponse("Please, enter numeric resource id");
             return;
         }
         $view = $task->getAll();
-        print_r($view);
+        $router->sendResponse($view);
         return;
     case 'POST':
-        echo "Add new resource";
+        $task->add($update->userId, $update->task);
+        $router->sendResponse("The resource successfully added.");
         return;
     case 'PATCH':
-        echo "Resource " . $router->getResourceId() . " update";
+        if ($task->getId((int)$router->getResourceId()) == null) {
+            $router->sendResponse([
+                'message' => "Resource id - " . $router->getResourceId() . " does not exist",
+                'code' => 404
+            ]);
+            return;
+        }
+        $taskId = $task->getId((int)$router->getResourceId());
+        if ($taskId[0]['status'] == 1) {
+            $task->unchecking((int)$router->getResourceId());
+            $router->sendResponse([
+                'message' => "The resource successfully deleted.",
+            ]);
+            return;
+        }
+        $task->checking((int)$router->getResourceId());
+        $router->sendResponse([
+            'message' => "The resource successfully deleted."
+        ]);
         return;
     case 'DELETE':
-        echo "Resource " . $router->getResourceId() . " delete";
+        if ($task->getId((int)$router->getResourceId()) == null) {
+            $router->sendResponse([
+                'message' => "Resource id - " . $router->getResourceId() . " does not exist",
+                'code' => 404
+            ]);
+            return;
+        }
+        $task->delete((int)$router->getResourceId());
+        $router->sendResponse([
+            'message' => "The resource successfully deleted."
+        ]);
         return;
 }

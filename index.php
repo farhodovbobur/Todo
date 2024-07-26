@@ -9,7 +9,6 @@ $update = json_decode(file_get_contents('php://input'));
 $router = new Router();
 
 if ($router->isApiCall()) {
-    echo $router->isApiCall();
     require 'api/api.php';
     return;
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Todo
+class Todo // Table Data Pattern
 {
     private PDO $pdo;
 
