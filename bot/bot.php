@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-$bot = new Bot();
+$bot = new Bot($_ENV['BOT_TOKEN']);
 $task = new Todo();
 $user = new Users();
+$router = new Router();
 
-if (isset($update->message)) {
-    $message = $update->message;
+//$update = $router->getUpdates();
+
+if (isset($router->getUpdates()->message)) {
+    $message = $router->getUpdates()->message;
     $chat_id = $message->chat->id;
     $text = $message->text;
     $user_name = $message->chat->username;
@@ -58,8 +61,8 @@ if (isset($update->message)) {
     }
 }
 
-if (isset($update->callback_query)) {
-    $callback_query = $update->callback_query;
+if (isset($router->getUpdates()->callback_query)) {
+    $callback_query = $router->getUpdates()->callback_query;
     $callback_data = $callback_query->data;
     $chat_id = $callback_query->message->chat->id;
     $message_id = $callback_query->message->message_id;

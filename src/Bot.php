@@ -6,14 +6,14 @@ use GuzzleHttp\Client;
 
 class Bot
 {
-    const string TOKEN = '7419186710:AAHSUAqcoezhE4widMMgcPgde0mp_cf4bDE';
-    const string TGAPI = "https://api.telegram.org/bot".self::TOKEN."/";
+    public string $tgApi;
     public Client $client;
     public Todo $task;
 
-    public function __construct()
+    public function __construct(string $token)
     {
-        $this->client = new Client(['base_uri'=>self::TGAPI]);
+        $this->tgApi = "https://api.telegram.org/bot$token/";
+        $this->client = new Client(['base_uri'=>$this->tgApi]);
         $this->task = new Todo();
     }
 

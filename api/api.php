@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-$update = json_decode(file_get_contents('php://input'));
-
 $router = new Router();
 $task = new Todo();
+
+$update = $router->getUpdates();
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
@@ -37,13 +37,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if ($taskId[0]['status'] == 1) {
             $task->unchecking((int)$router->getResourceId());
             $router->sendResponse([
-                'message' => "The resource successfully deleted.",
+                'message' => "The resource successfully unchecked.",
             ]);
             return;
         }
         $task->checking((int)$router->getResourceId());
         $router->sendResponse([
-            'message' => "The resource successfully deleted."
+            'message' => "The resource successfully checked."
         ]);
         return;
     case 'DELETE':

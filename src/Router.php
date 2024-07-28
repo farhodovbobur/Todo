@@ -23,9 +23,9 @@ class Router
         return end($path);
     }
 
-    public function isTelegramUpdate()
+    public function isTelegramUpdate(): bool
     {
-        if (isset($this->updates) && isset($this->updates->update_id)) {
+        if (isset($this->updates->update_id)) {
             return true;
         }
         return false;
@@ -37,8 +37,8 @@ class Router
         echo json_encode($message);
     }
 
-    public function getUpdate()
+    public function getUpdates()
     {
-        return $this->updates->userId;
+        return $this->updates;
     }
 }
