@@ -8,13 +8,14 @@
     <title>TODO app</title>
 </head>
 <body>
+<?php require 'view/partials/navbar.php'; ?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-8">
             <h1 class="my-5">The Best TODO App</h1>
 
             <?php
-            require 'add_todo.php';
+            require 'view/add_todo.php';
             ?>
 
             <hr class='border border-2 opacity-50'>
@@ -30,7 +31,7 @@
                 <tbody>
 
                     <?php
-                    require 'show_todo.php';
+                    require 'view/show_todo.php';
                     ?>
 
                 </tbody>

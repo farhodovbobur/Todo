@@ -45,4 +45,76 @@ class Users
         return $user->execute();
     }
 
+    public function login(): void
+    {
+        $email = $_REQUEST['email'];
+        $password = $_REQUEST['password'];
+
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE user_email=:email AND user_password=:password");
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $_SESSION['user'] = $result['user_email'];
+            header('location: /');
+        } else {
+            $_SESSION['error'] = "Wrong email or password";
+            header('location: /login');
+        }
+        exit();
+    }
+
+    public function register(): void
+    {
+        $_SESSION['error'] = null;
+        if ($this->isUserExists()) {
+            $_SESSION['error'] = "User already exists";
+            header('location: /register');
+
+        } else {
+            $user = $this->create();
+            $_SESSION['user'] = $user['user_email'];
+            header('location: /');
+        }
+        exit();
+    }
+
+
+    public function create()
+    {
+        if ($_POST['email'] != null && $_POST['password'] != null) {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            $stmt = $this->pdo->prepare("INSERT INTO users (user_email, user_password) VALUES (:email, :password)");
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $password);
+            $stmt->execute();
+
+            $user = $this->pdo->prepare("SELECT * FROM users WHERE user_email=:email");
+            $user->bindParam(':email', $email);
+            $user->execute();
+            return $user->fetch(PDO::FETCH_ASSOC);
+        }
+        $_SESSION['error'] = "Email or password is empty";
+        header('location: /register');
+        exit();
+    }
+
+    public function isUserExists(): bool
+    {
+        if (isset($_POST['email'])) {
+            $email = $_POST['email'];
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE user_email=:email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            return (bool)$stmt->fetch();
+        }
+        return false;
+    }
+
+
+
 }

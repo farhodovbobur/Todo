@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 $task = new Todo();
+$router = new Router();
+
+//$_SESSION['error'] = null;
 
 if (count($_POST) > 0 || count($_GET) > 0) {
 
@@ -24,4 +27,13 @@ if (count($_POST) > 0 || count($_GET) > 0) {
     }
 }
 
-require 'view/view.php';
+$router->get('/', fn() => require 'view/pages/home.php');
+
+$router->get('/todos', fn() => require 'view/pages/view.php');
+$router->get('/notes', fn() => require 'view/pages/notes.php');
+$router->get('/login', fn() => require 'view/pages/auth/login.php');
+$router->get('/register', fn() => require 'view/pages/auth/register.php');
+$router->post('/register', fn() => (new Users())->register());
+$router->post('/login', fn() => (new Users())->login());
+
+//require 'view/view.php';
