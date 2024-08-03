@@ -81,6 +81,12 @@ class Users
         exit();
     }
 
+    public function logout(): void
+    {
+        session_destroy();
+        header('location: /');
+        exit();
+    }
 
     public function create()
     {
