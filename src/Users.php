@@ -57,7 +57,7 @@ class Users
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            $_SESSION['user'] = $result['user_email'];
+            $_SESSION['user'] = $result['user_name'];
             header('location: /');
         } else {
             $_SESSION['error'] = "Wrong email or password";
@@ -70,12 +70,12 @@ class Users
     {
         $_SESSION['error'] = null;
         if ($this->isUserExists()) {
-            $_SESSION['error'] = "User already exists";
+            $_SESSION['error'] = "This User already exists";
             header('location: /register');
 
         } else {
             $user = $this->create();
-            $_SESSION['user'] = $user['user_email'];
+            $_SESSION['user'] = $user['user_name'];
             header('location: /');
         }
         exit();
@@ -90,11 +90,14 @@ class Users
 
     public function create()
     {
-        if ($_POST['email'] != null && $_POST['password'] != null) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $name = $_POST['username'];
 
-            $stmt = $this->pdo->prepare("INSERT INTO users (user_email, user_password) VALUES (:email, :password)");
+        if (!str_contains($email, " ") && !str_contains($password, " ") && !str_contains($name, " ")) {
+
+            $stmt = $this->pdo->prepare("INSERT INTO users (user_name, user_email, user_password) VALUES (:name, :email, :password)");
+            $stmt->bindParam(':name', $name);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             $stmt->execute();
@@ -104,7 +107,7 @@ class Users
             $user->execute();
             return $user->fetch(PDO::FETCH_ASSOC);
         }
-        $_SESSION['error'] = "Email or password is empty";
+        $_SESSION['error'] = "Wrong information entered";
         header('location: /register');
         exit();
     }

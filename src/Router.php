@@ -42,18 +42,26 @@ class Router
         return $this->updates;
     }
 
-    public static function get($path, $callback): void
+    public static function get($path, $callback, $call = null): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $path) {
             $callback();
+
+            if ($call !== null) {
+                $call();
+            }
             exit();
         }
     }
 
-    public static function post($path, $callback): void
+    public static function post($path, $callback, $callback2 = null): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI']=== $path) {
             $callback();
+
+            if ($callback2 !== null) {
+                $callback2();
+            }
             exit();
         }
     }
@@ -61,6 +69,7 @@ class Router
     public static function notFound(): void
     {
         http_response_code(404);
-
+        require 'view/pages/404.php';
+        exit();
     }
 }

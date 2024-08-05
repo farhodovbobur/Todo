@@ -1,5 +1,5 @@
 
-<form action="../index.php" method="post" class="row row-cols-lg-auto py-4">
+<form action="/todos" method="post" class="row row-cols-lg-auto py-4">
     <div class="col-12">
         <label for="todo" class="form-label"></label>
         <label>
