@@ -44,7 +44,7 @@ class Router
 
     public static function get($path, $callback, $call = null): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $path) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === $path) {
             $callback();
 
             if ($call !== null) {
@@ -56,7 +56,7 @@ class Router
 
     public static function post($path, $callback, $callback2 = null): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI']=== $path) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === $path) {
             $callback();
 
             if ($callback2 !== null) {
